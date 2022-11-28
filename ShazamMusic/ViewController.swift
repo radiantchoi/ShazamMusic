@@ -78,3 +78,44 @@ final class ViewController: UIViewController {
     }
 }
 
+enum DeviceType {
+    case iPhone14Pro
+    
+    func name() -> String {
+        switch self {
+        case .iPhone14Pro:
+            return "iPhone 14 Pro"
+        }
+    }
+}
+
+#if canImport(SwiftUI) && DEBUG
+import SwiftUI
+extension UIViewController {
+    
+    private struct Preview: UIViewControllerRepresentable {
+        let viewController: UIViewController
+        
+        func makeUIViewController(context: Context) -> UIViewController {
+            return viewController
+        }
+        
+        func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        }
+    }
+    
+    func showPreview(_ deviceType: DeviceType = .iPhone14Pro) -> some View {
+        Preview(viewController: self).previewDevice(PreviewDevice(rawValue: deviceType.name()))
+    }
+}
+#endif
+
+#if canImport(SwiftUI) && DEBUG
+import SwiftUI
+
+struct ViewController_Preview: PreviewProvider {
+    static var previews: some View {
+        ViewController().showPreview(.iPhone14Pro)
+    }
+}
+#endif
