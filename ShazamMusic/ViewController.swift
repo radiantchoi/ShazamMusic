@@ -7,9 +7,13 @@
 
 import UIKit
 
+import RxSwift
 import SnapKit
 
 final class ViewController: UIViewController {
+    private let disposeBag = DisposeBag()
+    private let shazamSession = ShazamSession()
+    
     private lazy var mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -75,6 +79,24 @@ final class ViewController: UIViewController {
         }
         
         mainStackView.addArrangedSubview(playButton)
+    }
+    
+    private func bindResult() {
+        shazamSession.result
+            .subscribe(onNext: { result in
+                switch result {
+                case .success(let song):
+                    let info = "Title: \(song.title ?? "NO TITLE"), Artist: \(song.artist ?? "NO ARTIST")"
+                    DispatchQueue.main.async {
+                        self.infoLabel.text = info
+                    }
+                case .failure(let error):
+                    DispatchQueue.main.async {
+                        self.infoLabel.text = error.localizedDescription
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
 }
 
