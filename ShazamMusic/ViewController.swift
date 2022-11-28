@@ -7,6 +7,8 @@
 
 import UIKit
 
+import MarqueeLabel
+import RxCocoa
 import RxSwift
 import SnapKit
 
@@ -36,8 +38,8 @@ final class ViewController: UIViewController {
         return button
     }()
     
-    private lazy var infoLabel: UILabel = {
-        let label = UILabel()
+    private lazy var infoLabel: MarqueeLabel = {
+        let label = MarqueeLabel()
         label.text = "Try!"
         return label
     }()
@@ -52,6 +54,8 @@ final class ViewController: UIViewController {
         super.viewDidLoad()
         
         setupView()
+        bindAction()
+        bindSearchResult()
     }
 
     private func setupView() {
@@ -81,22 +85,51 @@ final class ViewController: UIViewController {
         mainStackView.addArrangedSubview(playButton)
     }
     
-    private func bindResult() {
+    private func bindAction() {
+        searchButton.rx.tap
+            .withUnretained(self)
+            .bind { _ in
+                self.searchTapped()
+            }
+            .disposed(by: disposeBag)
+        
+        playButton.rx.tap
+            .withUnretained(self)
+            .bind { _ in
+                self.playTapped()
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindSearchResult() {
         shazamSession.result
             .subscribe(onNext: { result in
                 switch result {
                 case .success(let song):
                     let info = "Title: \(song.title ?? "NO TITLE"), Artist: \(song.artist ?? "NO ARTIST")"
                     DispatchQueue.main.async {
+                        self.mainStackView.backgroundColor = .systemBlue
                         self.infoLabel.text = info
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
+                        self.mainStackView.backgroundColor = .systemRed
                         self.infoLabel.text = error.localizedDescription
                     }
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func searchTapped() {
+        shazamSession.start()
+        DispatchQueue.main.async {
+            self.mainStackView.backgroundColor = .systemTeal
+        }
+    }
+    
+    private func playTapped() {
+        print("play!")
     }
 }
 

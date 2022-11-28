@@ -21,10 +21,16 @@ final class ShazamSession: NSObject {
     private lazy var inputNode = audioEngine.inputNode
     private lazy var bus: AVAudioNodeBus = 0
     
+    override init() {
+        super.init()
+        
+        session.delegate = self
+    }
+    
     func start() {
         switch audioSession.recordPermission {
         case .granted:
-            self.record()
+            record()
         case .denied:
             result.onNext(.failure(.recordDenied))
         case .undetermined:
@@ -47,12 +53,12 @@ final class ShazamSession: NSObject {
     
     private func record() {
         do {
-            let format = self.inputNode.outputFormat(forBus: bus)
-            self.inputNode.installTap(onBus: bus, bufferSize: 1024, format: format) { buffer, time in
+            let format = inputNode.outputFormat(forBus: bus)
+            inputNode.installTap(onBus: bus, bufferSize: 2048, format: format) { buffer, time in
                 self.session.matchStreamingBuffer(buffer, at: time)
             }
-            self.audioEngine.prepare()
-            try self.audioEngine.start()
+            audioEngine.prepare()
+            try audioEngine.start()
         } catch {
             result.onNext(.failure(.unknown))
         }

@@ -18,6 +18,7 @@
 		4FCC093C2934F7AA00F469BD /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 4FCC093B2934F7AA00F469BD /* RxRelay */; };
 		4FCC093E2934F7AA00F469BD /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FCC093D2934F7AA00F469BD /* RxSwift */; };
 		4FCC09402935111900F469BD /* ShazamSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC093F2935111900F469BD /* ShazamSession.swift */; };
+		4FCC09432935209C00F469BD /* MarqueeLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 4FCC09422935209C00F469BD /* MarqueeLabel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FCC093C2934F7AA00F469BD /* RxRelay in Frameworks */,
+				4FCC09432935209C00F469BD /* MarqueeLabel in Frameworks */,
 				4FCC093A2934F7AA00F469BD /* RxCocoa in Frameworks */,
 				4FCC093E2934F7AA00F469BD /* RxSwift in Frameworks */,
 				4FCC09372934F79500F469BD /* SnapKit in Frameworks */,
@@ -99,6 +101,7 @@
 				4FCC09392934F7AA00F469BD /* RxCocoa */,
 				4FCC093B2934F7AA00F469BD /* RxRelay */,
 				4FCC093D2934F7AA00F469BD /* RxSwift */,
+				4FCC09422935209C00F469BD /* MarqueeLabel */,
 			);
 			productName = ShazamMusic;
 			productReference = 4FCC091E2934F76A00F469BD /* ShazamMusic.app */;
@@ -131,6 +134,7 @@
 			packageReferences = (
 				4FCC09352934F79500F469BD /* XCRemoteSwiftPackageReference "SnapKit" */,
 				4FCC09382934F7AA00F469BD /* XCRemoteSwiftPackageReference "RxSwift" */,
+				4FCC09412935209C00F469BD /* XCRemoteSwiftPackageReference "MarqueeLabel" */,
 			);
 			productRefGroup = 4FCC091F2934F76A00F469BD /* Products */;
 			projectDirPath = "";
@@ -312,6 +316,7 @@
 				DEVELOPMENT_TEAM = H5UNW2D34P;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ShazamMusic/Info.plist;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow mic to test";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -341,6 +346,7 @@
 				DEVELOPMENT_TEAM = H5UNW2D34P;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ShazamMusic/Info.plist;
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Allow mic to test";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -400,6 +406,14 @@
 				kind = branch;
 			};
 		};
+		4FCC09412935209C00F469BD /* XCRemoteSwiftPackageReference "MarqueeLabel" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cbpowell/MarqueeLabel";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -422,6 +436,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4FCC09382934F7AA00F469BD /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		4FCC09422935209C00F469BD /* MarqueeLabel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4FCC09412935209C00F469BD /* XCRemoteSwiftPackageReference "MarqueeLabel" */;
+			productName = MarqueeLabel;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
