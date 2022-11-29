@@ -17,6 +17,8 @@ final class ViewController: UIViewController {
     private let shazamSession = ShazamSession()
     private let musicSession = MusicSession()
     
+    private var songInfo: SongInfo?
+    
     private lazy var mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -107,7 +109,14 @@ final class ViewController: UIViewController {
             .subscribe(onNext: { result in
                 switch result {
                 case .success(let song):
-                    let info = "Title: \(song.title ?? "NO TITLE"), Artist: \(song.artist ?? "NO ARTIST")"
+                    let title = song.title ?? "NO TITLE"
+                    let artist = song.artist ?? "NO ARTIST"
+                    let album = song.album ?? "NO ALBUM"
+                    
+                    let info = "Title: \(title), Artist: \(artist)"
+                    
+                    self.songInfo = SongInfo(title: title, artist: artist, album: album)
+                    
                     DispatchQueue.main.async {
                         self.mainStackView.backgroundColor = .systemCyan
                         self.infoLabel.text = info
@@ -131,7 +140,7 @@ final class ViewController: UIViewController {
     }
     
     private func playTapped() {
-        musicSession.fetchMusic()
+        musicSession.fetchMusic(term: songInfo)
     }
 }
 

@@ -5,6 +5,7 @@
 //  Created by Gordon Choi on 2022/11/30.
 //
 
+import Foundation
 import MusicKit
 
 final class MusicSession {
@@ -12,16 +13,20 @@ final class MusicSession {
     
     private let request: MusicCatalogSearchRequest = {
         var request = MusicCatalogSearchRequest(term: "Happy", types: [Song.self])
-        request.limit = 10
+        request.limit = 1
         return request
     }()
     
-    func fetchMusic() {
+    func fetchMusic(term: SongInfo?) {
+        guard let term else { return }
+        
         Task {
             let status = await MusicAuthorization.request()
             switch status {
             case .authorized:
                 do {
+                    let request = MusicCatalogSearchRequest(term: term.title, types: [Song.self])
+                    
                     let response = try await request.response()
                     songs = response.songs.compactMap {
                         SongInfo(title: $0.title, artist: $0.artistName, album: $0.albumTitle)
