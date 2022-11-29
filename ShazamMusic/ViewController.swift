@@ -108,7 +108,7 @@ final class ViewController: UIViewController {
                 case .success(let song):
                     let info = "Title: \(song.title ?? "NO TITLE"), Artist: \(song.artist ?? "NO ARTIST")"
                     DispatchQueue.main.async {
-                        self.mainStackView.backgroundColor = .systemBlue
+                        self.mainStackView.backgroundColor = .systemCyan
                         self.infoLabel.text = info
                     }
                 case .failure(let error):
@@ -124,6 +124,7 @@ final class ViewController: UIViewController {
     private func searchTapped() {
         shazamSession.start()
         DispatchQueue.main.async {
+            self.infoLabel.text = "Searching..."
             self.mainStackView.backgroundColor = .systemTeal
         }
     }
