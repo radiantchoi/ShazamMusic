@@ -15,6 +15,7 @@ import SnapKit
 final class ViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let shazamSession = ShazamSession()
+    private let musicSession = MusicSession()
     
     private lazy var mainStackView: UIStackView = {
         let stackView = UIStackView()
@@ -130,7 +131,7 @@ final class ViewController: UIViewController {
     }
     
     private func playTapped() {
-        print("play!")
+        musicSession.fetchMusic()
     }
 }
 
