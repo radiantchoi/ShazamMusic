@@ -41,11 +41,6 @@ final class MusicSession {
         }
     }
     
-    // 음악을 검색하는 함수
-    func searchMusic() {
-        
-    }
-    
     // 음악을 재생하는 함수
     func playMusic() {
         
