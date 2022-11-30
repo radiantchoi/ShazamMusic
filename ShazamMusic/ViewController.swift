@@ -58,6 +58,7 @@ final class ViewController: UIViewController {
         
         setupView()
         bindAction()
+        bindView()
         bindSearchResult()
     }
 
@@ -86,6 +87,22 @@ final class ViewController: UIViewController {
         }
         
         mainStackView.addArrangedSubview(playButton)
+    }
+    
+    private func bindView() {
+        shazamSession.isSearching
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { searchState in
+                switch searchState {
+                case true:
+                    self.infoLabel.text = "Searching..."
+                    self.mainStackView.backgroundColor = .systemTeal
+                case false:
+                    self.infoLabel.text = "Not searching"
+                    self.mainStackView.backgroundColor = .systemGray
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     private func bindAction() {
@@ -133,11 +150,7 @@ final class ViewController: UIViewController {
     }
     
     private func searchTapped() {
-        shazamSession.start()
-        DispatchQueue.main.async {
-            self.infoLabel.text = "Searching..."
-            self.mainStackView.backgroundColor = .systemTeal
-        }
+        shazamSession.toggleSearch()
     }
     
     private func playTapped() {

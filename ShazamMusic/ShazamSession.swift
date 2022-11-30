@@ -14,6 +14,8 @@ typealias ShazamSearchResult = Result<ShazamSong, ShazamError>
 
 final class ShazamSession: NSObject {
     var result = PublishSubject<ShazamSearchResult>()
+    var isSearching = BehaviorSubject(value: false)
+    private let disposeBag = DisposeBag()
     
     private lazy var audioSession: AVAudioSession = .sharedInstance()
     private lazy var session: SHSession = .init()
@@ -25,6 +27,31 @@ final class ShazamSession: NSObject {
         super.init()
         
         session.delegate = self
+        bindRecord()
+    }
+    
+    func toggleSearch() {
+        guard let currentState = try? isSearching.value() else { return }
+        
+        switch currentState {
+        case true:
+            isSearching.onNext(false)
+        case false:
+            isSearching.onNext(true)
+        }
+    }
+    
+    func bindRecord() {
+        isSearching
+            .subscribe(onNext: {
+                switch $0 {
+                case true:
+                    self.start()
+                case false:
+                    self.stop()
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func start() {
@@ -32,16 +59,19 @@ final class ShazamSession: NSObject {
         case .granted:
             record()
         case .denied:
+            isSearching.onNext(false)
             result.onNext(.failure(.recordDenied))
         case .undetermined:
             audioSession.requestRecordPermission { granted in
                 if granted {
                     self.record()
                 } else {
+                    self.isSearching.onNext(false)
                     self.result.onNext(.failure(.recordDenied))
                 }
             }
         @unknown default:
+            isSearching.onNext(false)
             result.onNext(.failure(.unknown))
         }
     }
@@ -69,17 +99,18 @@ extension ShazamSession: SHSessionDelegate {
     func session(_ session: SHSession, didFind match: SHMatch) {
         guard let mediaItem = match.mediaItems.first,
               let shazamSong = ShazamSong(mediaItem: mediaItem) else {
+            isSearching.onNext(false)
             result.onNext(.failure(.matchFailed))
             return
         }
         
+        isSearching.onNext(false)
         result.onNext(.success(shazamSong))
-        stop()
     }
     
     func session(_ session: SHSession, didNotFindMatchFor signature: SHSignature, error: Error?) {
+        isSearching.onNext(false)
         result.onNext(.failure(.matchFailed))
-        stop()
     }
 }
 
