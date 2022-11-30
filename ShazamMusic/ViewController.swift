@@ -132,8 +132,10 @@ final class ViewController: UIViewController {
                     let album = song.album ?? "NO ALBUM"
                     
                     let info = "Title: \(title), Artist: \(artist)"
+                    let songInfo = SongInfo(isrc: isrc, title: title, artist: artist, album: album)
+                    self.songInfo = songInfo
                     
-                    self.songInfo = SongInfo(isrc: isrc, title: title, artist: artist, album: album)
+                    self.musicSession.fetchMusic(term: songInfo)
                     
                     DispatchQueue.main.async {
                         self.mainStackView.backgroundColor = .systemCyan
@@ -154,7 +156,7 @@ final class ViewController: UIViewController {
     }
     
     private func playTapped() {
-        musicSession.fetchMusic(term: songInfo)
+        musicSession.playMusic()
     }
 }
 

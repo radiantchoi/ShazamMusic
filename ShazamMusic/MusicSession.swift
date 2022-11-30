@@ -9,7 +9,15 @@ import Foundation
 import MusicKit
 
 final class MusicSession {
-    private var song: SongInfo?
+    private var songInfo: SongInfo?
+    private var song: Song?
+    
+    private lazy var player = ApplicationMusicPlayer.shared
+    private lazy var playerState = player.state
+    
+    private var isPlaying: Bool {
+        return playerState.playbackStatus == .playing
+    }
     
     private let request: MusicCatalogSearchRequest = {
         var request = MusicCatalogSearchRequest(term: "Happy", types: [Song.self])
@@ -28,10 +36,11 @@ final class MusicSession {
                     let request = MusicCatalogResourceRequest<Song>(matching: \.isrc, equalTo: term.isrc)
                     let response = try await request.response()
                     if let item = response.items.first {
-                        song = SongInfo(isrc: item.isrc!, title: item.title, artist: item.artistName, album: item.albumTitle)
+                        song = item
+                        songInfo = SongInfo(isrc: item.isrc!, title: item.title, artist: item.artistName, album: item.albumTitle)
                     }
                     
-                    print(song ?? "NO SONG")
+                    print(songInfo ?? "NO SONG")
                 } catch (let error) {
                     print(error.localizedDescription)
                 }
@@ -43,7 +52,19 @@ final class MusicSession {
     
     // 음악을 재생하는 함수
     func playMusic() {
-        
+        guard let song else { return }
+        if !isPlaying {
+            player.queue = [song]
+            Task {
+                do {
+                    try await player.play()
+                } catch let error {
+                    print(error.localizedDescription)
+                }
+            }
+        } else {
+            player.pause()
+        }
     }
 }
 
