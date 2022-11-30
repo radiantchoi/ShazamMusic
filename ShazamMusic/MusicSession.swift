@@ -14,6 +14,7 @@ final class MusicSession {
     
     private lazy var player = ApplicationMusicPlayer.shared
     private lazy var playerState = player.state
+    private var isQueueSet = false
     
     private var isPlaying: Bool {
         return playerState.playbackStatus == .playing
@@ -54,7 +55,11 @@ final class MusicSession {
     func playMusic() {
         guard let song else { return }
         if !isPlaying {
-            player.queue = [song]
+            if !isQueueSet {
+                player.queue = [song]
+                isQueueSet = true
+            }
+            
             Task {
                 do {
                     try await player.play()
