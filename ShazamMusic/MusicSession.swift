@@ -9,7 +9,7 @@ import Foundation
 import MusicKit
 
 final class MusicSession {
-    private var songs = [SongInfo]()
+    private var song: SongInfo?
     
     private let request: MusicCatalogSearchRequest = {
         var request = MusicCatalogSearchRequest(term: "Happy", types: [Song.self])
@@ -25,13 +25,13 @@ final class MusicSession {
             switch status {
             case .authorized:
                 do {
-                    let request = MusicCatalogSearchRequest(term: term.title, types: [Song.self])
-                    
+                    let request = MusicCatalogResourceRequest<Song>(matching: \.isrc, equalTo: term.isrc)
                     let response = try await request.response()
-                    songs = response.songs.compactMap {
-                        SongInfo(title: $0.title, artist: $0.artistName, album: $0.albumTitle)
+                    if let item = response.items.first {
+                        song = SongInfo(isrc: item.isrc!, title: item.title, artist: item.artistName, album: item.albumTitle)
                     }
-                    print(songs)
+                    
+                    print(song ?? "NO SONG")
                 } catch (let error) {
                     print(error.localizedDescription)
                 }
@@ -48,6 +48,7 @@ final class MusicSession {
 }
 
 struct SongInfo {
+    let isrc: String
     let title: String
     let artist: String
     let album: String?

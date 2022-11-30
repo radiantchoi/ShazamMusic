@@ -84,17 +84,20 @@ extension ShazamSession: SHSessionDelegate {
 }
 
 struct ShazamSong: Equatable {
+    let isrc: String?
     let title: String?
     let artist: String?
     let album: String?
     let imageURL: URL?
     
     init?(mediaItem: SHMatchedMediaItem) {
-        guard let title = mediaItem.title,
+        guard let isrc = mediaItem.isrc,
+              let title = mediaItem.title,
               let artist = mediaItem.artist,
               let album = mediaItem.album
         else { return nil }
         
+        self.isrc = isrc
         self.title = title
         self.artist = artist
         self.album = album

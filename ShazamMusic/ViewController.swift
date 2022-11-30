@@ -109,13 +109,14 @@ final class ViewController: UIViewController {
             .subscribe(onNext: { result in
                 switch result {
                 case .success(let song):
+                    let isrc = song.isrc ?? "NO ISRC"
                     let title = song.title ?? "NO TITLE"
                     let artist = song.artist ?? "NO ARTIST"
                     let album = song.album ?? "NO ALBUM"
                     
                     let info = "Title: \(title), Artist: \(artist)"
                     
-                    self.songInfo = SongInfo(title: title, artist: artist, album: album)
+                    self.songInfo = SongInfo(isrc: isrc, title: title, artist: artist, album: album)
                     
                     DispatchQueue.main.async {
                         self.mainStackView.backgroundColor = .systemCyan
