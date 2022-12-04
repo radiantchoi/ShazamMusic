@@ -5,7 +5,6 @@
 //  Created by Gordon Choi on 2022/11/30.
 //
 
-import Foundation
 import MusicKit
 
 final class MusicSession {
@@ -19,13 +18,7 @@ final class MusicSession {
     private var isPlaying: Bool {
         return playerState.playbackStatus == .playing
     }
-    
-    private let request: MusicCatalogSearchRequest = {
-        var request = MusicCatalogSearchRequest(term: "Happy", types: [Song.self])
-        request.limit = 1
-        return request
-    }()
-    
+
     func fetchMusic(term: SongInfo?) {
         guard let term else { return }
         
