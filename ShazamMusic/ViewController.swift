@@ -152,7 +152,10 @@ final class ViewController: UIViewController {
     }
     
     private func searchTapped() {
-        shazamSession.toggleSearch()
+//        shazamSession.toggleSearch()
+        makeCancelOKAlert(title: "검색한다", message: "진짜 한다") { _ in
+            self.shazamSession.toggleSearch()
+        }
     }
     
     private func playTapped() {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F51A7012941020E0039D86A /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F51A7002941020E0039D86A /* UIViewController+.swift */; };
 		4F5384FA29365C4A00EF96C9 /* MusicSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F5384F929365C4A00EF96C9 /* MusicSession.swift */; };
 		4FCC09222934F76A00F469BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC09212934F76A00F469BD /* AppDelegate.swift */; };
 		4FCC09242934F76A00F469BD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC09232934F76A00F469BD /* SceneDelegate.swift */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F51A7002941020E0039D86A /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
 		4F5384F929365C4A00EF96C9 /* MusicSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicSession.swift; sourceTree = "<group>"; };
 		4FCC091E2934F76A00F469BD /* ShazamMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShazamMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FCC09212934F76A00F469BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				4FCC092A2934F76B00F469BD /* Assets.xcassets */,
 				4FCC092C2934F76B00F469BD /* LaunchScreen.storyboard */,
 				4FCC092F2934F76B00F469BD /* Info.plist */,
+				4F51A7002941020E0039D86A /* UIViewController+.swift */,
 			);
 			path = ShazamMusic;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 			files = (
 				4FCC09262934F76A00F469BD /* ViewController.swift in Sources */,
 				4FCC09222934F76A00F469BD /* AppDelegate.swift in Sources */,
+				4F51A7012941020E0039D86A /* UIViewController+.swift in Sources */,
 				4F5384FA29365C4A00EF96C9 /* MusicSession.swift in Sources */,
 				4FCC09402935111900F469BD /* ShazamSession.swift in Sources */,
 				4FCC09242934F76A00F469BD /* SceneDelegate.swift in Sources */,
