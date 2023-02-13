@@ -6,10 +6,10 @@
 //
 
 import MusicKit
+import RxSwift
 
 final class MusicSession {
     private var songInfo: SongInfo?
-    private var song: Song?
     
     private lazy var player = ApplicationMusicPlayer.shared
     private lazy var playerState = player.state
@@ -17,6 +17,11 @@ final class MusicSession {
     
     private var isPlaying: Bool {
         return playerState.playbackStatus == .playing
+    }
+    
+    private var playbackStatus = BehaviorSubject(value: false)
+    var playbackStatusObservable: Observable<Bool> {
+        return playbackStatus.asObservable()
     }
 
     func fetchMusic(term: SongInfo?) {
@@ -30,7 +35,7 @@ final class MusicSession {
                     let request = MusicCatalogResourceRequest<Song>(matching: \.isrc, equalTo: term.isrc)
                     let response = try await request.response()
                     if let item = response.items.first {
-                        song = item
+                        player.queue = [item]
                         songInfo = SongInfo(isrc: item.isrc!, title: item.title, artist: item.artistName, album: item.albumTitle)
                     }
                     
@@ -45,24 +50,24 @@ final class MusicSession {
     }
     
     // 음악을 재생하는 함수
+    func togglePlayer() {
+        isPlaying ? pauseMusic() : playMusic()
+    }
+    
     func playMusic() {
-        guard let song else { return }
-        if !isPlaying {
-            if !isQueueSet {
-                player.queue = [song]
-                isQueueSet = true
+        Task {
+            do {
+                try await player.play()
+                playbackStatus.onNext(true)
+            } catch let error {
+                debugPrint(error)
             }
-            
-            Task {
-                do {
-                    try await player.play()
-                } catch let error {
-                    print(error.localizedDescription)
-                }
-            }
-        } else {
-            player.pause()
         }
+    }
+    
+    func pauseMusic() {
+        player.stop()
+        playbackStatus.onNext(false)
     }
 }
 

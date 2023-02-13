@@ -92,14 +92,28 @@ final class ViewController: UIViewController {
     private func bindView() {
         shazamSession.isSearching
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { searchState in
+            .subscribe(onNext: { [weak self] searchState in
                 switch searchState {
                 case true:
-                    self.infoLabel.text = "Searching..."
-                    self.mainStackView.backgroundColor = .systemTeal
+                    self?.infoLabel.text = "Searching..."
+                    self?.mainStackView.backgroundColor = .systemTeal
                 case false:
-                    self.infoLabel.text = "Not searching"
-                    self.mainStackView.backgroundColor = .systemGray
+                    self?.infoLabel.text = "Not searching"
+                    self?.mainStackView.backgroundColor = .systemGray
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        musicSession.playbackStatusObservable
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] playbackState in
+                debugPrint(playbackState)
+                
+                switch playbackState {
+                case true:
+                    self?.playButton.setImage(UIImage(systemName: "pause.fill"), for: .normal)
+                case false:
+                    self?.playButton.setImage(UIImage(systemName: "play.fill"), for: .normal)
                 }
             })
             .disposed(by: disposeBag)
@@ -159,7 +173,7 @@ final class ViewController: UIViewController {
     }
     
     private func playTapped() {
-        musicSession.playMusic()
+        musicSession.togglePlayer()
     }
 }
 
