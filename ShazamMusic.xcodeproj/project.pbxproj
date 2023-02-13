@@ -21,6 +21,7 @@
 		4FCC093E2934F7AA00F469BD /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4FCC093D2934F7AA00F469BD /* RxSwift */; };
 		4FCC09402935111900F469BD /* ShazamSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FCC093F2935111900F469BD /* ShazamSession.swift */; };
 		4FCC09432935209C00F469BD /* MarqueeLabel in Frameworks */ = {isa = PBXBuildFile; productRef = 4FCC09422935209C00F469BD /* MarqueeLabel */; };
+		4FFB46ED299A434D000BBE16 /* MusicVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FFB46EC299A434D000BBE16 /* MusicVerifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		4FCC092D2934F76B00F469BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4FCC092F2934F76B00F469BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4FCC093F2935111900F469BD /* ShazamSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShazamSession.swift; sourceTree = "<group>"; };
+		4FFB46EC299A434D000BBE16 /* MusicVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicVerifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				4FCC09252934F76A00F469BD /* ViewController.swift */,
 				4FCC093F2935111900F469BD /* ShazamSession.swift */,
 				4F5384F929365C4A00EF96C9 /* MusicSession.swift */,
+				4FFB46EC299A434D000BBE16 /* MusicVerifier.swift */,
 				4FCC09272934F76A00F469BD /* Main.storyboard */,
 				4FCC092A2934F76B00F469BD /* Assets.xcassets */,
 				4FCC092C2934F76B00F469BD /* LaunchScreen.storyboard */,
@@ -173,6 +176,7 @@
 				4FCC09222934F76A00F469BD /* AppDelegate.swift in Sources */,
 				4F51A7012941020E0039D86A /* UIViewController+.swift in Sources */,
 				4F5384FA29365C4A00EF96C9 /* MusicSession.swift in Sources */,
+				4FFB46ED299A434D000BBE16 /* MusicVerifier.swift in Sources */,
 				4FCC09402935111900F469BD /* ShazamSession.swift in Sources */,
 				4FCC09242934F76A00F469BD /* SceneDelegate.swift in Sources */,
 			);

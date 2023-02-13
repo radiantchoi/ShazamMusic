@@ -16,6 +16,7 @@ final class ViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let shazamSession = ShazamSession()
     private let musicSession = MusicSession()
+    private let musicVerifier = MusicVerifier()
     
     private var songInfo: SongInfo?
     
@@ -173,7 +174,18 @@ final class ViewController: UIViewController {
     }
     
     private func playTapped() {
-        musicSession.togglePlayer()
+        musicVerifier.isSubscribedToAppleMusic()
+            .subscribe(onSuccess: { [weak self] result in
+                switch result {
+                case true:
+                    self?.musicSession.togglePlayer()
+                case false:
+                    self?.makeOKAlert(title: "재생 불가", message: "애플뮤직이 있어야 재생이 가능")
+                }
+            }, onFailure: { error in
+                debugPrint(error)
+            })
+            .disposed(by: disposeBag)
     }
 }
 

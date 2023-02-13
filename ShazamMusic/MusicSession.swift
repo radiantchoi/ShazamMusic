@@ -23,6 +23,10 @@ final class MusicSession {
     var playbackStatusObservable: Observable<Bool> {
         return playbackStatus.asObservable()
     }
+    
+    init() {
+        playerState.repeatMode = .one
+    }
 
     func fetchMusic(term: SongInfo?) {
         guard let term else { return }
